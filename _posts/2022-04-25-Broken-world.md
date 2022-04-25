@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Typescript is not as Sound as You Think
+title: TypeScript is not as Sound as You Think
 ---
 
 The point of this blog post is to highlight that programming language design is not a solved problem and there are unexpected issues in highly popular languages that remains unsolved of which you should be aware of.
@@ -31,7 +31,7 @@ const c: string = a + b;
 
 Since we know that `a` and `b` are a `number` the addition of two `numbers` should still be a `number`. Thus, the assignment to `c` is therefore illegal in TypeScript. In another universe the language designers might have allowed this scenario by saying that if you assign a number to a string, implicitly convert it to its string representation, but the TypeScript designers thought otherwise. Notably, in JavaScript this is valid code and is what they would do. The up-side is maximum expressiveness but at the cost of the compiler being less able to identify errors.
 
-Now, I started this post with saying that we are trusting the compiler to its job. Particularly we assume that since we spend a lot of time writing type information in TypeScript (or any other statically typed language for that matter), we assume that any logical error that can be deduced from types are identified. It turns out that the type checker is not perfect. Maybe not so unsurprisingly, we will see that TypeScript (which are fully compatible with JavaScript) suffers from inconsistencies. In the research field of programming languages we say that a type system is sound iff:
+Now, I started this post with saying that we are trusting the compiler to do its job. Particularly we assume that since we spend a lot of time writing type information in TypeScript (or any other statically typed language for that matter), we assume that any logical error that can be deduced from types are identified. It turns out that the type checker is not perfect. Maybe not so unsurprisingly, we will see that TypeScript (which are fully compatible with JavaScript) suffers from inconsistencies. In the research field of programming languages we say that a type system is sound iff:
 
 > `If x has type ` \\( \tau \\) `, then either`
 >
@@ -64,6 +64,6 @@ if (typeof(z.f) === "number") {
 console.log(z);
 ```
 
-The type of `z` is derived from `x` and `y` to be `{f: string | number | boolean}`. Even if TypeScript have all type information to either warn or throw an error it happily compiles this code without any issue, due to the way it derives the type of `z`. But the world is not broken due to type of `z`, but rather what it allows us to do with the original reference that `z` references. Even if `z.f` is a string, and it can't possibly write a number since that would break the type definition of `x`, this is exactly what happens. The world is thus broken!
+The type of `z` is derived from `x` and `y` to be `{f: string | number | boolean}`. Even if TypeScript have all type information to either warn or throw an error it happily compiles this code without any issue, due to the way it derives the type of `z`. But the world is not broken due to type of `z`, but rather what it allows us to do with the original reference that `z` references. If `z.f` is a string you can't write a number since that would break the type definition of `x`. Regrettably, this is exactly what happens and TypeScript does not complain. The world is thus broken!
 
 _Thanks to Elias and Ellen for pointing out this example_
