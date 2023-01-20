@@ -15,4 +15,5 @@ permalink: /academic_results/
 
 # Community Service
 
+* Member of PLDI 2023 Artifact Evaluation Committee
 * Member of ECOOP 2022 Artifact Evaluation Committee
