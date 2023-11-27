@@ -1,7 +1,7 @@
 ---
-title: Academic Results
+title: Academic Portfolio
 layout: post-no-title
-permalink: /academic_results/
+permalink: /academic-portfolio/
 ---
 # Publications
 
@@ -15,6 +15,7 @@ permalink: /academic_results/
 
 # Community Service
 
+* Workshop Organizer of [MoreVMs 2024](https://2024.programming-conference.org/home/MoreVMs-2024)
 * Member of OOPSLA 2024 Artifact Evaluation Committee
 * Member of PLDI 2023 Artifact Evaluation Committee
 * Member of ECOOP 2022 Artifact Evaluation Committee
