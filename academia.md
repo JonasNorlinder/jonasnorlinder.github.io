@@ -5,6 +5,9 @@ permalink: /academic-portfolio/
 ---
 # Publications
 
+* Jonas Norlinder, Albert Mingkun Yang, David Black-Schaffer, Tobias Wrigstad. Mutator-Driven Object Placement using Load Barriers. _In Proceedings of the 21st ACM SIGPLAN International Conference on Managed Programming Languages and Runtimes (MPLR’24)_.
+[https://doi.org/10.1145/3679007.3685060](https://doi.org/10.1145/3679007.3685060)
+
 * Jonas Norlinder, Erik Österlund, and Tobias Wrigstad. Compressed Forwarding Tables Reconsidered. _In Proceedings of the 19th International Conference on Managed Programming Languages and Runtimes (MPLR ’22)_.
 [https://doi.org/10.1145/3546918.3546928](https://doi.org/10.1145/3546918.3546928)
 
