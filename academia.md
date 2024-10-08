@@ -1,16 +1,16 @@
 ---
-title: Academic Portfolio
+title: Research Portfolio
 layout: post-no-title
-permalink: /academic-portfolio/
+permalink: /research-portfolio/
 ---
 # Publications
 
 * Mark-Scavenge: Waiting for Trash to Take Itself Out. Jonas Norlinder, Erik Österlund, David Black-Schaffer, Tobias Wrigstad. _(OOPSLA’24)_. [https://doi.org/10.1145/3689791](https://doi.org/10.1145/3689791)
 
-* Mutator-Driven Object Placement using Load Barriers. Jonas Norlinder, Albert Mingkun Yang, David Black-Schaffer, Tobias Wrigstad. _In Proceedings of the 21st ACM SIGPLAN International Conference on Managed Programming Languages and Runtimes (MPLR’24)_.
+* Mutator-Driven Object Placement using Load Barriers. Jonas Norlinder, Albert Mingkun Yang, David Black-Schaffer, Tobias Wrigstad. _(MPLR’24)_.
 [https://doi.org/10.1145/3679007.3685060](https://doi.org/10.1145/3679007.3685060)
 
-* Compressed Forwarding Tables Reconsidered. Jonas Norlinder, Erik Österlund, and Tobias Wrigstad. _In Proceedings of the 19th International Conference on Managed Programming Languages and Runtimes (MPLR ’22)_.
+* Compressed Forwarding Tables Reconsidered. Jonas Norlinder, Erik Österlund, and Tobias Wrigstad. _(MPLR ’22)_.
 [https://doi.org/10.1145/3546918.3546928](https://doi.org/10.1145/3546918.3546928)
 
 # Awards
