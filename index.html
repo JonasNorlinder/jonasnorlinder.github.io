@@ -1,0 +1,19 @@
+---
+layout: default
+---
+
+<div class="posts">
+  {% for post in paginator.posts %}
+    <article class="post">
+
+      <p><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a> - {{ post.date | date: "%B %e, %Y" }}</p>
+    </article>
+  {% endfor %}
+</div>
+
+<!-- Pagination -->
+<div class="bottompagination">
+  <div class="navigation" role="navigation">
+    {% include pagination.html %}
+  </div>
+</div>
