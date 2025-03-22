@@ -24,7 +24,7 @@ footer-links:
   github: JonasNorlinder
   googleschoolar: #V9HrQjkAAAAJ
   instagram:
-  linkedin: # jonas-norlinder-521157106/?locale=en_US
+  linkedin: jonas-norlinder-521157106/?locale=en_US
   pinterest:
   rss: # just type anything here for a working RSS icon
   twitter:
@@ -81,6 +81,7 @@ plugins:
   - jekyll-sitemap
   - jekyll-feed
   - jekyll-paginate
+  - jekyll-redirect-from
 
 # Exclude these files from your production _site
 exclude:
