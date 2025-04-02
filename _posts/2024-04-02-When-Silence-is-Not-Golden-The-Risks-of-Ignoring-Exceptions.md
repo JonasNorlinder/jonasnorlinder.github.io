@@ -1,0 +1,126 @@
+---
+title: "When Silence is Not Golden: The Risks of Ignoring Exceptions"
+layout: post
+hidden: true
+---
+
+[DaCapo](https://github.com/dacapobench/dacapobench/) is a widely used
+benchmarking tool in the Java community. It was originally released in 2006 and
+after 14 years, got a new major release in 2023. The development team deserves
+credit for their diligent efforts in revamping DaCapo. However, upon reviewing
+the benchmarks, I noticed that none have been verified for correctness through
+functional testing. While there are lightweight checksums in place to ensure
+consistency in output across individual benchmarks, no automatic analysis is
+performed to validate the accuracy of these outputs.
+
+One of the benchmarks offered by DaCapo is H2, a Java-based SQL database. To
+evaluate H2's performance, the TPC-C benchmark is utilized. TPC-C is an
+industry-standard benchmark specifically designed for assessing the performance
+of Online Transaction Processing (OLTP) systems.
+
+While DaCapo relies on Apache's implementation of TPC-C they have modified the
+implementation to some degree to fit with their framework.
+
+On a high level the DaCapo driver for H2 looks something like this (I have
+simplified the code for readability):
+
+{% highlight java linenos %}
+// DaCapo main driver
+public void run() {
+    while (iterations < MAX_ITERATIONS) {
+        final long start = System.currentTimeMillis();
+        iterate();
+        final long duration = System.currentTimeMillis() - start;
+        System.out.print("===== DaCapo completed warmup in "
+            + elapsed + " msec");
+
+        iterations++;
+    }
+}
+
+// DaCapo's h2 driver
+public void iterate() {
+    Thread[] threads = new Thread[submitters.length];
+    for (int i = 0; i < submitters.length; i++) {
+      submitters[i].clearTransactionCount();
+      threads[i] = newThread(i, submitters[i], transactionsPerTerminal[i]);
+    }
+
+    for (int i = 0; i < threads.length; i++) {
+      threads[i].start();
+    }
+
+    for (int i = 0; i < threads.length; i++) {
+      threads[i].join();
+    }
+}
+{% endhighlight %}
+
+Each thread will then run the follow method, where count corresponds to the
+number of transactions that DaCapo has defined for each workload size: 400
+(small), 100000 (default), 2500000 (large).
+
+{% highlight java linenos %}
+public void runTransactions(final int count) {
+    for (int i = 0; i < count; i++) {
+      int txType = getTransactionType();
+      boolean success = false;
+      while (!success) {
+        try {
+          success = runTransaction(txType, displayData);
+        } catch (Exception e) {
+        }
+      }
+    }
+}
+{% endhighlight %}
+
+The above method is part of DaCapo's driver and not part of Apache's
+implementation of TPC-C. Have you noticed anything unusual? Specifically, if a
+transaction fails, we retry it until it succeeds. Any exceptions that occur are
+suppressed. As a result, we disregard all attempted transactions and only count
+those that complete without throwing an exception. While this approach may be
+problematic if many transactions fail, it may be less concerning if failures are
+infrequent. It's possible that this behavior aligns with real-world
+applications, where occasional failures can occur. Although I'm not familiar
+with the intricacies of the TPC-C specification, it's conceivable that it
+permits some degree of transaction failure.
+
+I set out to measure how frequent we observe successes and failures for small,
+default and large workload.
+
+```plain
+                              Large      Default    Small
+Total fails:              6 691 994      349 111    2 792
+Total successes:          2 500 000      100 000      400
+Total transactions:       2 500 000      100 000      400
+Total fails/transactions:       2.7          3.5      7.0
+```
+
+We can observe that transactions that fails and throw an exception is between
+more than 2.7 to 7 times more common than normal transactions! What's even more
+concerning is that the proportion of failed transactions varies, making it
+impossible to determine the impact of changing workload sizes without explicit
+measurement. Unless you specifically track how the workload characteristics
+change with different sizes, it will remain unclear.
+
+There are 8 types of different transactions and measured sucess and failures for
+each:
+
+![h2 large](/images/dacapoException/large.png)
+
+It is clear that `PAYMENT_BY_NAME` and `PAYMENT_BY_ID` have a really high
+failure rate. The above plot depicts the large workload but
+[default](/images/dacapoException/default.png) and
+[small](/images/dacapoException/small.png) looks very similar. The previous
+version of DaCapo from 2009 (version 9.12) does not have this problem.
+
+I believe this investigation into DaCapo's driver of the TPC-C workload for h2
+reveals:
+
+* We should verify that the workload behaves as expected, going beyond mere
+  checksum validation of the output to ensure its correctness
+
+* Suppressing exceptions silently poses significant risks, as these issues often become overlooked over time
+
+* Unfortunately, my analysis indicates that the current implementation of TPC-C in the latest DaCapo release contains errors.
