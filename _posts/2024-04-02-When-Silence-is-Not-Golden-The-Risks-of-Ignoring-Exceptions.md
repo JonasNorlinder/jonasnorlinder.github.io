@@ -38,7 +38,7 @@ public void run() {
     }
 }
 
-// DaCapo's h2 driver
+// DaCapo's H2 driver
 public void iterate() {
     Thread[] threads = new Thread[submitters.length];
     for (int i = 0; i < submitters.length; i++) {
@@ -107,7 +107,7 @@ change with different sizes, it will remain unclear.
 There are 8 types of different transactions and measured sucess and failures for
 each:
 
-![h2 large](/images/dacapoException/large.png)
+![H2 large](/images/dacapoException/large.png)
 
 It is clear that `PAYMENT_BY_NAME` and `PAYMENT_BY_ID` have a really high
 failure rate. The above plot depicts the large workload but
@@ -115,7 +115,7 @@ failure rate. The above plot depicts the large workload but
 [small](/images/dacapoException/small.png) looks very similar. The previous
 version of DaCapo from 2009 (version 9.12) does not have this problem.
 
-I believe this investigation into DaCapo's driver of the TPC-C workload for h2
+I believe this investigation into DaCapo's driver of the TPC-C workload for H2
 reveals:
 
 * We should verify that the workload behaves as expected, going beyond mere
