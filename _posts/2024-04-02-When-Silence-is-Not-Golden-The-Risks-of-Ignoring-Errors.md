@@ -73,7 +73,7 @@ Key takeaways:
 * Cassandra with a large workload in `v23.11` are measuring a buggy application
   where all reads fail
 
-* DaCapo "resolved" the issue in `v23.11-MR1` by chaning the workload to something completley
+* DaCapo "resolved" the issue in `v23.11-MR1` by changing the workload to something completley
   different with vastly different read/insert proportions.
 
 # Examining Exception Supression in H2
