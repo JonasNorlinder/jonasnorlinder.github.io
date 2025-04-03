@@ -3,6 +3,8 @@ title: "When Silence is Not Golden: The Risks of Supressing Errors"
 layout: post
 hidden: true
 sitemap: false
+redirect_from:
+  - /When-Silence-is-Not-Golden-The-Risks-of-Ignoring-Exceptions/
 ---
 
 [DaCapo](https://github.com/dacapobench/dacapobench/) is a widely used
