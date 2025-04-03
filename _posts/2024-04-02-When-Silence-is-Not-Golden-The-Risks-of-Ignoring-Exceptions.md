@@ -1,5 +1,5 @@
 ---
-title: "When Silence is Not Golden: The Risks of Ignoring Exceptions"
+title: "When Silence is Not Golden: The Risks of Supressing Exceptions"
 layout: post
 hidden: true
 sitemap: false
@@ -94,16 +94,18 @@ default and large workload.
                               Large      Default    Small
 Total fails:              6 691 994      349 111    2 792
 Total successes:          2 500 000      100 000      400
-Total transactions:       2 500 000      100 000      400
-Total fails/transactions:       2.7          3.5      7.0
+Total transactions:       9 191 994      449 111    3 192
+% error of total:                73 	        78	     87
 ```
 
 We can observe that transactions that fails and throw an exception is between
-more than 2.7 to 7 times more common than normal transactions! What's even more
-concerning is that the proportion of failed transactions varies, making it
-impossible to determine the impact of changing workload sizes without explicit
-measurement. Unless you specifically track how the workload characteristics
-change with different sizes, it will remain unclear.
+more than 2.7 to 7 times more common than normal transactions! As a consequence
+73-87% of the transactions are errors and hence the benchmark mostly measures the
+rate of error processing of a buggy application, which is not very meaningful.
+What's even more concerning is that the proportion of failed transactions
+varies, making it impossible to determine the impact of changing workload sizes
+without explicit measurement. Unless you specifically track how the workload
+characteristics change with different sizes, it will remain unclear.
 
 There are 8 types of different transactions and measured sucess and failures for
 each:
