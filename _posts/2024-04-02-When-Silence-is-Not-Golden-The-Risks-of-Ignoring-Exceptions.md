@@ -2,6 +2,7 @@
 title: "When Silence is Not Golden: The Risks of Ignoring Exceptions"
 layout: post
 hidden: true
+sitemap: false
 ---
 
 [DaCapo](https://github.com/dacapobench/dacapobench/) is a widely used
