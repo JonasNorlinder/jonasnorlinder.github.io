@@ -112,8 +112,7 @@ each:
 It is clear that `PAYMENT_BY_NAME` and `PAYMENT_BY_ID` have a really high
 failure rate. The above plot depicts the large workload but
 [default](/images/dacapoException/default.png) and
-[small](/images/dacapoException/small.png) looks very similar. The previous
-version of DaCapo from 2009 (version 9.12) does not have this problem.
+[small](/images/dacapoException/small.png) looks very similar.
 
 I believe this investigation into DaCapo's driver of the TPC-C workload for H2
 reveals:
@@ -121,6 +120,9 @@ reveals:
 * We should verify that the workload behaves as expected, going beyond mere
   checksum validation of the output to ensure its correctness
 
-* Suppressing exceptions silently poses significant risks, as these issues often become overlooked over time
+* Silently suppressing exceptions poses significant risks, as these tend to be
+  overlooked over time. It is likely that the driver was correct initially, but
+  became faulty at some point during development.
 
-* Unfortunately, my analysis indicates that the current implementation of TPC-C in the latest DaCapo release contains errors.
+* Unfortunately, my analysis indicates that the current implementation of TPC-C
+  in the latest DaCapo release contains errors.
