@@ -1,5 +1,5 @@
 ---
-title: "When Silence is Not Golden: The Risks of Supressing Exceptions"
+title: "When Silence is Not Golden: The Risks of Supressing Errors"
 layout: post
 hidden: true
 sitemap: false
@@ -13,6 +13,68 @@ the benchmarks, I noticed that none have been verified for correctness through
 functional testing. While there are lightweight checksums in place to ensure
 consistency in output across individual benchmarks, no automatic analysis is
 performed to validate the accuracy of these outputs.
+
+# Examining output supression in Cassandra
+
+Cassandra is a new addition in the latest major release. It is a NoSQL
+distributed database used by many so it is certainly a welcomed addition to the
+benchmarking suite. DaCapo uses [YCSB](https://github.com/brianfrankcooper/YCSB)
+as the driver for the workload.
+
+In version `v23.11-chopin` the large workload uses the following configuration
+(omitted intricate details, see full version
+[here](https://github.com/dacapobench/dacapobench/blob/v23.11-chopin/benchmarks/bms/cassandra/workload/ycsb/workload-huge).
+Yes, the file is called huge but it is indeed [what is configured to run for large](https://github.com/dacapobench/dacapobench/blob/v23.11-chopin/benchmarks/bms/cassandra/cassandra.cnf)):
+{% highlight configuration %}
+workload=site.ycsb.workloads.TimeSeriesWorkload
+operationcount=1179648
+
+readproportion=0.10
+insertproportion=0.90
+{% endhighlight %}
+
+whereas small and default are configured to use `CoreWorkload`
+with vastly different read and insert proportions
+
+{% highlight configuration %}
+workload=site.ycsb.workloads.CoreWorkload
+operationcount=200000 # default
+operationcount=2000   # small
+
+readproportion=0.5
+updateproportion=0.5
+{% endhighlight %}
+
+The logging configuration of DaCapo's driver for Cassandra sets the default log level for `org.apache.cassandra` to DEBUG, resulting in a vast amount of logged information that significantly impacts performance. This issue was addressed in `v23.11-MR1`, released in November 2024, as mentioned in the release notes, which point to an [issue](https://github.com/dacapobench/dacapobench/issues/272) that revealed excessive allocation due to debug logging rather than Cassandra itself.
+
+Upon removing output suppression during iteration and running `java
+-jar dacapo-evaluation-git-fd292e92.jar cassandra -s large -n 1 &>
+workload_large.log`, I obtained a 1.6 GB log file filled with exceptions. Notably, `com.datastax.driver.core.exception
+s.InvalidQueryException` is thrown 118 206 times, accounting for approximately
+10% of all operations, indicating that nearly all reads failed. Consequently,
+DaCapo `v23.11` using Cassandra with a large workload essentially measure the error processing rate of a faulty application, rather than providing a representative workload. Surprisingly, neither the release notes nor the linked issue mention this critical problem.
+
+This error might explain why the workload was entirely revamped in `v23.11-MR1` to resemble the small/default configuration:
+
+{% highlight configuration %}
+workload=site.ycsb.workloads.CoreWorkload
+operationcount=2000000
+
+readproportion=0.5
+updateproportion=0.5
+{% endhighlight %}
+
+I believe highlighting this issue is crucial, given that published research has utilized `v23.11` with its flawed configuration.
+
+Key takeaways:
+
+* Cassandra with a large workload in `v23.11` are measuring a buggy application
+  where all reads fail
+
+* DaCapo "resolved" the issue in `v23.11-MR1` by chaning the workload to something completley
+  different with vastly different read/insert proportions.
+
+# Examining exception supression in H2
 
 One of the benchmarks offered by DaCapo is H2, a Java-based SQL database. To
 evaluate H2's performance, the TPC-C benchmark is utilized. TPC-C is an
