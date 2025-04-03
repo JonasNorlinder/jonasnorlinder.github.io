@@ -8,13 +8,14 @@ redirect_from:
 ---
 
 [DaCapo](https://github.com/dacapobench/dacapobench/) is a widely used
-benchmarking tool in the Java community. It was originally released in 2006 and
-after 14 years, got a new major release in 2023. The development team deserves
-credit for their diligent efforts in revamping DaCapo. However, upon reviewing
-the benchmarks, I noticed that none have been verified for correctness through
-functional testing. While there are lightweight checksums in place to ensure
-consistency in output across individual benchmarks, no automatic analysis is
-performed to validate the accuracy of these outputs.
+benchmarking tool in the Java community and the original paper has been cited
+over 1400 times. It was originally released in 2006 and after 14 years, got a new
+major release in 2023. The development team deserves credit for their diligent
+efforts in revamping DaCapo. However, upon reviewing the benchmarks, I noticed
+that none have been verified for correctness through functional testing. While
+there are lightweight checksums in place to ensure consistency in output across
+individual benchmarks, no automatic analysis is performed to validate the
+accuracy of these outputs.
 
 # Examining Output Supression in Cassandra
 
