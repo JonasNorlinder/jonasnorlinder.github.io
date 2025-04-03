@@ -48,7 +48,7 @@ readproportion=0.5
 updateproportion=0.5
 {% endhighlight %}
 
-The logging configuration of DaCapo's driver for Cassandra sets the default log level for `org.apache.cassandra` to DEBUG, resulting in a vast amount of logged information that significantly impacts performance. This issue was addressed in `v23.11-MR1`, released in November 2024, as mentioned in the release notes, which point to an [issue](https://github.com/dacapobench/dacapobench/issues/272) that revealed excessive allocation due to debug logging rather than Cassandra itself.
+The logging configuration of DaCapo's driver for Cassandra sets the default log level for `org.apache.cassandra` to DEBUG, resulting in a vast amount of logged information that significantly impacts performance. However, this went unnoticed since DaCapo supresses all output from the benchmark. This issue was addressed in `v23.11-MR1`, released in November 2024, as mentioned in the release notes, which point to an [issue](https://github.com/dacapobench/dacapobench/issues/272) that revealed excessive allocation due to debug logging rather than Cassandra itself.
 
 Upon removing output suppression during iteration and running `java
 -jar dacapo-evaluation-git-fd292e92.jar cassandra -s large -n 1 &>
