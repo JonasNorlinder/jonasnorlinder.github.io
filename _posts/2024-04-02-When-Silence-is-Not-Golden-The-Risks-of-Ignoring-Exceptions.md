@@ -21,7 +21,7 @@ distributed database used by many so it is certainly a welcomed addition to the
 benchmarking suite. DaCapo uses [YCSB](https://github.com/brianfrankcooper/YCSB)
 as the driver for the workload.
 
-In version `v23.11-chopin` the large workload uses the following configuration
+In version `v23.11` the large workload uses the following configuration
 (omitted intricate details, see full version
 [here](https://github.com/dacapobench/dacapobench/blob/v23.11-chopin/benchmarks/bms/cassandra/workload/ycsb/workload-huge).
 Yes, the file is called huge but it is indeed [what is configured to run for large](https://github.com/dacapobench/dacapobench/blob/v23.11-chopin/benchmarks/bms/cassandra/cassandra.cnf)):
