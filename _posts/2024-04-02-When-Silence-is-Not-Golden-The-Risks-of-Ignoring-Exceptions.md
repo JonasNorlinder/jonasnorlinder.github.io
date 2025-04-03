@@ -95,7 +95,7 @@ default and large workload.
 Total fails:              6 691 994      349 111    2 792
 Total successes:          2 500 000      100 000      400
 Total transactions:       9 191 994      449 111    3 192
-% error of total:                73 	        78	     87
+% error of total:                73 	        78       87
 ```
 
 We can observe that transactions that fails and throw an exception is between
