@@ -122,7 +122,7 @@ public void iterate() {
 }
 {% endhighlight %}
 
-Each thread will then run the follow method, where count corresponds to the
+Each thread will then run the following method, where count corresponds to the
 number of transactions that DaCapo has defined for each workload size: 400
 (small), 100000 (default), 2500000 (large).
 
