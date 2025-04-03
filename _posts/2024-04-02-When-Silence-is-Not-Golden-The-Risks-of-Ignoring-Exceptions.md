@@ -14,7 +14,7 @@ functional testing. While there are lightweight checksums in place to ensure
 consistency in output across individual benchmarks, no automatic analysis is
 performed to validate the accuracy of these outputs.
 
-# Examining output supression in Cassandra
+# Examining Output Supression in Cassandra
 
 Cassandra is a new addition in the latest major release. It is a NoSQL
 distributed database used by many so it is certainly a welcomed addition to the
@@ -74,7 +74,7 @@ Key takeaways:
 * DaCapo "resolved" the issue in `v23.11-MR1` by chaning the workload to something completley
   different with vastly different read/insert proportions.
 
-# Examining exception supression in H2
+# Examining Exception Supression in H2
 
 One of the benchmarks offered by DaCapo is H2, a Java-based SQL database. To
 evaluate H2's performance, the TPC-C benchmark is utilized. TPC-C is an
