@@ -19,7 +19,7 @@ accuracy of these outputs.
 
 # Examining Output Supression in Cassandra
 
-Cassandra is a new addition in the latest major release. It is a NoSQL
+Cassandra is a new addition in the latest major release of DaCapo. It is a NoSQL
 distributed database used by many so it is certainly a welcomed addition to the
 benchmarking suite. DaCapo uses [YCSB](https://github.com/brianfrankcooper/YCSB)
 as the driver for the workload.
@@ -74,7 +74,7 @@ Key takeaways:
 * Cassandra with a large workload in `v23.11` are measuring a buggy application
   where all reads fail
 
-* DaCapo "resolved" the issue in `v23.11-MR1` by changing the workload to something completley
+* DaCapo "resolved" the issue in `v23.11-MR1` by changing the workload to something completely
   different with vastly different read/insert proportions.
 
 # Examining Exception Supression in H2
