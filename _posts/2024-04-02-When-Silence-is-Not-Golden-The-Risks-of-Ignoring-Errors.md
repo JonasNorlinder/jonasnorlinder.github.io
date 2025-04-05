@@ -17,10 +17,10 @@ there are lightweight checksums in place to ensure consistency in output across
 individual benchmarks, no automatic analysis is performed to validate the
 accuracy of these outputs.
 
-# Examining Output Supression in Cassandra
+# Examining Output Suppression in Cassandra
 
 Cassandra is a new addition in the latest major release of DaCapo. It is a NoSQL
-distributed database used by many so it is certainly a welcomed addition to the
+distributed database used by many, so it is certainly a welcomed addition to the
 benchmarking suite. DaCapo uses [YCSB](https://github.com/brianfrankcooper/YCSB)
 as the driver for the workload.
 
@@ -48,7 +48,7 @@ readproportion=0.5
 updateproportion=0.5
 {% endhighlight %}
 
-The logging configuration of DaCapo's driver for Cassandra sets the default log level for `org.apache.cassandra` to DEBUG, resulting in a vast amount of logged information that significantly impacts performance. However, this went unnoticed since DaCapo supresses all output from the benchmark. This issue was addressed in `v23.11-MR1`, released in November 2024, as mentioned in the release notes, which point to an [issue](https://github.com/dacapobench/dacapobench/issues/272) that revealed excessive allocation due to debug logging rather than Cassandra itself.
+The logging configuration of DaCapo's driver for Cassandra sets the default log level for `org.apache.cassandra` to DEBUG, resulting in a vast amount of logged information that significantly impacts performance. However, this went unnoticed since DaCapo suppresses all output from the benchmark. This issue was addressed in `v23.11-MR1`, released in November 2024, as mentioned in the release notes, which point to an [issue](https://github.com/dacapobench/dacapobench/issues/272) that revealed excessive allocation due to debug logging rather than Cassandra itself.
 
 Upon removing output suppression during iteration and running `java
 -jar dacapo-evaluation-git-fd292e92.jar cassandra -s large -n 1 &>
@@ -77,7 +77,7 @@ Key takeaways:
 * DaCapo "resolved" the issue in `v23.11-MR1` by changing the workload to something completely
   different with vastly different read/insert proportions.
 
-# Examining Exception Supression in H2
+# Examining Exception Suppression in H2
 
 One of the benchmarks offered by DaCapo is H2, a Java-based SQL database. To
 evaluate H2's performance, the TPC-C benchmark is utilized. TPC-C is an
