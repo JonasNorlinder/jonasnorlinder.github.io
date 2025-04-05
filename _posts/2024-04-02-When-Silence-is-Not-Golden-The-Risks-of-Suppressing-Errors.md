@@ -7,6 +7,7 @@ redirect_from:
   - /When-Silence-is-Not-Golden-The-Risks-of-Ignoring-Exceptions/
   - /When-Silence-is-Not-Golden-The-Risks-of-Supressing-Exceptions/
   - /When-Silence-is-Not-Golden-The-Risks-of-Supressing-Errors/
+  - /When-Silence-is-Not-Golden-The-Risks-of-Ignoring-Errors/
 ---
 
 [DaCapo](https://github.com/dacapobench/dacapobench/) is a widely used
