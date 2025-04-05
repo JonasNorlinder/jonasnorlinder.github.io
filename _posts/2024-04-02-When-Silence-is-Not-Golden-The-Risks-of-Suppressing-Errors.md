@@ -1,10 +1,12 @@
 ---
-title: "When Silence is Not Golden: The Risks of Supressing Errors"
+title: "When Silence is Not Golden: The Risks of Suppressing Errors"
 layout: post
 hidden: true
 sitemap: false
 redirect_from:
   - /When-Silence-is-Not-Golden-The-Risks-of-Ignoring-Exceptions/
+  - /When-Silence-is-Not-Golden-The-Risks-of-Supressing-Exceptions/
+  - /When-Silence-is-Not-Golden-The-Risks-of-Supressing-Errors/
 ---
 
 [DaCapo](https://github.com/dacapobench/dacapobench/) is a widely used
@@ -164,7 +166,7 @@ Total transactions:       9 191 994      449 111    3 192
 ```
 
 We can observe that transactions that fails and throw an exception are between
-more than 2.7 to 7 times more common than normal transactions! As a consequence
+more than 2.7 to 7 times more common than normal transactions! As a consequence,
 73-87% of the transactions are errors and hence the benchmark mostly measures the
 rate of error processing of a buggy application, which is not very meaningful.
 What's even more concerning is that the proportion of failed transactions
