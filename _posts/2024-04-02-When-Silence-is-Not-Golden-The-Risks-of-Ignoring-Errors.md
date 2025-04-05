@@ -53,7 +53,7 @@ The logging configuration of DaCapo's driver for Cassandra sets the default log 
 Upon removing output suppression during iteration and running `java
 -jar dacapo-evaluation-git-fd292e92.jar cassandra -s large -n 1 &>
 workload_large.log`, I obtained a 1.6 GB log file filled with exceptions. Notably, `com.datastax.driver.core.exception
-s.InvalidQueryException` is thrown 118 206 times, accounting for approximately
+s.InvalidQueryException` are thrown 118,206 times, accounting for approximately
 10% of all operations, indicating that nearly all reads failed. Consequently,
 DaCapo `v23.11` using Cassandra with a large workload essentially measure the error processing rate of a faulty application, rather than providing a representative workload. Surprisingly, neither the release notes nor the linked issue mention this critical problem.
 
@@ -163,7 +163,7 @@ Total transactions:       9 191 994      449 111    3 192
 % error of total:                73           78       87
 ```
 
-We can observe that transactions that fails and throw an exception is between
+We can observe that transactions that fails and throw an exception are between
 more than 2.7 to 7 times more common than normal transactions! As a consequence
 73-87% of the transactions are errors and hence the benchmark mostly measures the
 rate of error processing of a buggy application, which is not very meaningful.
