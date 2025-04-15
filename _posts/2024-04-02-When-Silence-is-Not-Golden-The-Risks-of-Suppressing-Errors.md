@@ -51,14 +51,24 @@ readproportion=0.5
 updateproportion=0.5
 {% endhighlight %}
 
-The logging configuration of DaCapo's driver for Cassandra sets the default log level for `org.apache.cassandra` to DEBUG, resulting in a vast amount of logged information that significantly impacts performance. However, this went unnoticed since DaCapo suppresses all output from the benchmark. This issue was addressed in `v23.11-MR1`, released in November 2024, as mentioned in the release notes, which point to an [issue](https://github.com/dacapobench/dacapobench/issues/272) that revealed excessive allocation due to debug logging rather than Cassandra itself.
+The logging configuration of DaCapo's driver for Cassandra sets the default log
+level for `org.apache.cassandra` to DEBUG, resulting in a vast amount of logged
+information that significantly impacts performance. However, this went unnoticed
+since DaCapo suppresses all output from the benchmark. This issue was addressed
+in `v23.11-MR1`, released in November 2024, as mentioned in the release notes,
+which point to an [issue](https://github.com/dacapobench/dacapobench/issues/272)
+that revealed excessive allocation due to debug logging rather than Cassandra
+itself.
 
-Upon removing output suppression during iteration and running `java
--jar dacapo-evaluation-git-fd292e92.jar cassandra -s large -n 1 &>
-workload_large.log`, I obtained a 1.6 GB log file filled with exceptions. Notably, `com.datastax.driver.core.exception
-s.InvalidQueryException` are thrown 118,206 times, accounting for approximately
-10% of all operations, indicating that nearly all reads failed. Consequently,
-DaCapo `v23.11` using Cassandra with a large workload essentially measure the error processing rate of a faulty application, rather than providing a representative workload. Surprisingly, neither the release notes nor the linked issue mention this critical problem.
+Upon removing output suppression during iteration and running `java -jar
+dacapo-evaluation-git-fd292e92.jar cassandra -s large -n 1 &>
+workload_large.log`, I obtained a 1.6 GB log file filled with exceptions.
+Notably, `com.datastax.driver.core.exceptions.InvalidQueryException` are thrown
+118,206 times, accounting for approximately 10% of all operations, indicating
+that nearly all reads failed. Consequently, DaCapo `v23.11` using Cassandra with
+a large workload essentially measure the error processing rate of a faulty
+application, rather than providing a representative workload. Surprisingly,
+neither the release notes nor the linked issue mention this critical problem.
 
 This error might explain why the workload was entirely revamped in `v23.11-MR1` to resemble the small/default configuration:
 
