@@ -82,7 +82,7 @@ updateproportion=0.5
 
 I believe highlighting this issue is crucial, given that published research has utilized `v23.11` with its flawed configuration.
 
-Key takeaways:
+## Cassandra Key Takeaways
 
 * Cassandra with a large workload in `v23.11` are measuring a buggy application
   where all reads fail
@@ -195,6 +195,49 @@ failure rate. The above plot depicts the large workload but
 [default](/images/dacapoException/default.png) and
 [small](/images/dacapoException/small.png) looks very similar.
 
+## Unintended Consequences
+
+A new feature in DaCapo 23.11 is the possibility to measure application latency.
+For some reason, in H2, the DaCapo measurement for latency begins at the start of a transaction attempt and
+concludes only _after_ success. So the simplified code above should also have the
+following:
+
+{% highlight java linenos %}
+public void runTransactions(final int count) {
+    for (int i = 0; i < count; i++) {
+
+      LatencyReporter.start(tid);
+      int txType = getTransactionType();
+      boolean success = false;
+      while (!success) {
+        try {
+          success = runTransaction(txType, displayData);
+        } catch (Exception e) {
+        }
+      }
+      LatencyReporter.end(tid);
+    }
+}
+{% endhighlight %}
+
+To accurately assess application latency in a realistic deployment scenario, I
+focused on measuring the latency of successful operations only, as failed
+operations significantly skew the overall latency distribution. For a
+comprehensive analysis, I employed a state-of-the-art approach by warming up the
+virtual machine (VM) as-well as repeating the experiment 10 times to account for
+run-to-run variability. This allowed me to obtain a reliable estimate of the
+actual latency experienced by the application, which differs from the
+traditional measurement method used by DaCapo.
+
+![H2 large](/images/dacapoException/50.png)
+
+![H2 large](/images/dacapoException/999.png)
+
+It is evident that for both throughput (50th percentile) and tail latency
+(99.9th percentile) the difference is huge to what DaCapo is measuring.
+
+## H2 Key Takeaways
+
 I believe this investigation into DaCapo's driver of the TPC-C workload for H2
 reveals:
 
@@ -207,3 +250,6 @@ reveals:
 
 * Unfortunately, my analysis indicates that the current implementation of TPC-C
   in the latest DaCapo release contains errors.
+
+* Conclusions made with the latest release of DaCapo using H2 may need to be
+  reconsidered, especially when it comes to latency.
